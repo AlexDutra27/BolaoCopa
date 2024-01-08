@@ -61,6 +61,9 @@ public class Principal{
 
 		//	Exibir todos os resultados finais
 		infoResultados();
+
+		//	Calcular os pontos
+		calcularPontos();
 	}
 	
 	//	Iterar sobre os nomes dos times e criar os objetos correspondentes
@@ -187,6 +190,57 @@ public class Principal{
 			System.out.println();
 			jogos.get(linha).infoJogo();
 			System.out.printf("%d x %d", resultados[linha][0], resultados[linha][1]);
+		}
+	}
+
+	//	Calcular os pontos de cada jogador
+	public static void calcularPontos(){
+		for(Jogador jogador : jogadores){
+			for(int i = 0; i < 48; i++){
+				
+				//	Código de vitória/derrota/empate para cada jogo
+				int vitoriaPalpite, vitoriaResultado;
+
+				//	Diferença de gols dentre os times de um jogo
+				int diffPalpite, diffResultado;
+
+				//	Gols do palpite atual
+				int golsTime1Palpite = jogador.palpites[i][0];
+				int golsTime2Palpite = jogador.palpites[i][1];
+
+				//	Gols do resultado atual
+				int golsTime1Resultado = resultados[i][0];
+				int golsTime2Resultado = resultados[i][1];
+
+				if (golsTime1Palpite > golsTime2Palpite){
+					vitoriaPalpite = 1;
+				} else if(golsTime2Palpite > golsTime1Palpite){
+					vitoriaPalpite = 2;
+				} else {
+					vitoriaPalpite = 0;
+				}
+				diffPalpite = Math.abs(golsTime1Palpite - golsTime2Palpite);
+
+				if (golsTime1Resultado > golsTime2Resultado){
+					vitoriaResultado = 1;
+				} else if(golsTime2Resultado > golsTime1Resultado){
+					vitoriaResultado = 2;
+				} else {
+					vitoriaResultado = 0;
+				}
+				diffResultado = Math.abs(golsTime1Resultado - golsTime2Resultado);
+
+				// 12 pontos -> acertar placar exato
+				//  8 pontos -> acertar a vitória e diferença de gols
+				//  6 pontos -> acertar só quem ganhou/perdeu/empatou
+				if(golsTime1Palpite == golsTime1Resultado && golsTime2Palpite == golsTime2Resultado){
+					jogador.somaPontos(12);
+				} else if(vitoriaPalpite == vitoriaResultado && diffPalpite == diffResultado){
+					jogador.somaPontos(8);
+				} else if(vitoriaResultado == vitoriaPalpite){
+					jogador.somaPontos(6);
+				}
+			}
 		}
 	}
 }

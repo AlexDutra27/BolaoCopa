@@ -19,4 +19,9 @@ public class Jogador extends Principal {
         this.nome = nome;
         this.numeroJog = numero;
     }
+
+    //  Incrementar pontos
+    public void somaPontos(int pontos){
+        this.pontos += pontos;
+    }
 }
