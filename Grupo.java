@@ -10,6 +10,10 @@ public class Grupo {
         this.times = times;
         this.letra = letra;
     }
+    
+    public ArrayList<Jogo> getJogos(){
+        return this.jogos;
+    }
 
     public void setJogos(ArrayList<Jogo> jogos){
         this.jogos = jogos;

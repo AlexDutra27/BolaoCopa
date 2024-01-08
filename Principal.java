@@ -64,6 +64,12 @@ public class Principal{
 
 		//	Calcular os pontos
 		calcularPontos();
+
+		//	Calcular o ranking
+		definirRanking();
+
+		//	Exibir o ranking
+		showRanking();
 	}
 	
 	//	Iterar sobre os nomes dos times e criar os objetos correspondentes
@@ -132,13 +138,13 @@ public class Principal{
 		System.out.println("----- Defina os Palpites -----");
 
 		for (Jogador jogador : jogadores) {
-			System.out.printf("Escreva os palpites do jogador %d: %s%n", jogador.numeroJog, jogador.nome);
+			System.out.printf("Escreva os palpites do jogador %d: %s%n", jogador.getNumeroJog(), jogador.getNome());
 
 			int linhas = 0;
 			for(Grupo grupo : grupos){
 				grupo.infoGrupo();
 
-				for (Jogo jogo : grupo.jogos) {
+				for (Jogo jogo : grupo.getJogos()) {
 					jogo.infoJogo();
 
 					System.out.printf("%nPalpite | Gols time 1: ");
@@ -149,8 +155,8 @@ public class Principal{
 
 					System.out.println(); 
 
-					jogador.palpites[linhas][0] = r1;
-					jogador.palpites[linhas][1] = r2;
+					jogador.getPalpites()[linhas][0] = r1;
+					jogador.getPalpites()[linhas][1] = r2;
 					linhas++;
 				}
 			}
@@ -205,8 +211,8 @@ public class Principal{
 				int diffPalpite, diffResultado;
 
 				//	Gols do palpite atual
-				int golsTime1Palpite = jogador.palpites[i][0];
-				int golsTime2Palpite = jogador.palpites[i][1];
+				int golsTime1Palpite = jogador.getPalpites()[i][0];
+				int golsTime2Palpite = jogador.getPalpites()[i][1];
 
 				//	Gols do resultado atual
 				int golsTime1Resultado = resultados[i][0];
@@ -239,6 +245,40 @@ public class Principal{
 					jogador.somaPontos(8);
 				} else if(vitoriaResultado == vitoriaPalpite){
 					jogador.somaPontos(6);
+				}
+			}
+		}
+	}
+	
+	//	Calcular o ranking final dos jogadores
+	public static void definirRanking(){
+
+		//	Caso um jogador tenha mais pontos que o outro, recebe + 1 no "pontosPosicao"
+		//	Indica quantos jogadores o jogador está à frente
+		for (Jogador jogadorA : jogadores) {
+			for (Jogador jogadorB : jogadores) {
+				if (jogadorA.getPontos() >= jogadorB.getPontos() && jogadorA.getNumeroJog() != jogadorB.getNumeroJog()) {
+					jogadorA.somaPontosPosicao(1);
+				}                  
+			}
+		}
+
+		//	Posição recebe diferença do tamanho da lista com os pontosPosicao
+		//	Se há 10 jogadores, e ele está a frente de 9, sua posição é 10 - 9 = 1
+		for (Jogador jogador : jogadores) {
+			jogador.setPosicao((jogadores.size() - jogador.getPontosPosicao()));
+		}
+	}
+
+	//	Exibir dados do ranking
+	public static void showRanking(){
+		System.out.println("\n----- Ranking Final -----");
+
+		for(int i = 1; i <= jogadores.size(); i++){
+			for (Jogador jogadores : jogadores) {
+				if (jogadores.getPosicao() == i) {
+					System.out.printf("%d# - %s - %d pontos%n", i, jogadores.getNome(), jogadores.getPontos());
+					System.out.println("------------------");
 				}
 			}
 		}
