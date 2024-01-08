@@ -31,6 +31,9 @@ public class Principal{
 
 	//	Lista com os jogos
 	public static ArrayList<Jogo> jogos = new ArrayList<>();
+
+	//	Lista de jogadores do bolão
+	public static ArrayList<Jogador> jogadores = new ArrayList<>();
 	
 	//	Executar todos os métodos do Bolão
 	public static void iniciarBolao(){
@@ -40,6 +43,12 @@ public class Principal{
 
 		//	Montar grupos
 		setarGruposJogos();
+
+		//	Criar os jogos a partir dos grupos
+		criarJogos();
+
+		//	Recebe os jogadores por input do usuário
+		definirJogadores();
 	}
 	
 	//	Iterar sobre os nomes dos times e criar os objetos correspondentes
@@ -82,5 +91,24 @@ public class Principal{
 
 			jogos.addAll(jogosGrupo);
 		}
+	}
+
+	//	Captar os nomes dos jogadores e salvar na lista correspondente
+	public static void definirJogadores(){
+		System.out.println("----- Defina os Jogadores -----");
+		
+		int numeroJogador = 1;
+		char res;
+		do{
+			System.out.printf("Jogador %d: ", numeroJogador);               
+			jogadores.add(new Jogador(scan.nextLine(), numeroJogador));
+
+			System.out.println("Para encerrar a adição, digite \"x\". Senão. digite qualquer tecla");
+			res = scan.nextLine().charAt(0);
+
+			numeroJogador++;
+		}while(res != 'x');
+
+		System.out.println("----- Jogadores Definidos -----");
 	}
 }
