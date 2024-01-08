@@ -9,4 +9,9 @@ public class Jogo {
         this.time2 = time2;  
         this.numero = numero;
     }
+
+    //  Imprime informações do jogo (número e times)
+    public void infoJogo(){
+        System.out.printf("Jogo %d  | %s x %s | ", this.numero, this.time1.nome, this.time2.nome);
+    }
 }

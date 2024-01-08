@@ -19,4 +19,16 @@ public class Grupo {
     public Time getTime(int i){
         return this.times.get(i);
     }
+
+    //  Imprimir dados do grupo
+    public void infoGrupo(){
+        System.out.printf("Jogos do Grupo %s (", letra);
+        String timesString = "";
+        for(Time time : times){
+            timesString += time.nome + " | ";
+        }
+        timesString = timesString.substring(0, timesString.length() - 3);
+        timesString += ")";
+        System.out.println(timesString);
+    }
 }

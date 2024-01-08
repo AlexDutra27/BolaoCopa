@@ -49,6 +49,9 @@ public class Principal{
 
 		//	Recebe os jogadores por input do usuário
 		definirJogadores();
+
+		//	Recebe os palpites
+		definirPalpites();
 	}
 	
 	//	Iterar sobre os nomes dos times e criar os objetos correspondentes
@@ -110,5 +113,36 @@ public class Principal{
 		}while(res != 'x');
 
 		System.out.println("----- Jogadores Definidos -----");
+	}
+
+	//	Receber entrada dos palpites de cada jogador e armazenar na matriz correspondente
+	public static void definirPalpites(){
+		System.out.println("----- Defina os Palpites -----");
+
+		for (Jogador jogador : jogadores) {
+			System.out.printf("Escreva os palpites do jogador %d: %s%n", jogador.numeroJog, jogador.nome);
+
+			int linhas = 0;
+			for(Grupo grupo : grupos){
+				grupo.infoGrupo();
+
+				for (Jogo jogo : grupo.jogos) {
+					jogo.infoJogo();
+
+					System.out.printf("%nPalpite | Gols time 1: ");                  
+					int r1 = scan.nextInt();
+
+					System.out.printf("Palpite | Gols time 2: ");                                   
+					int r2 = scan.nextInt();
+
+					System.out.println(); 
+
+					jogador.palpites[linhas][0] = r1;
+					jogador.palpites[linhas][1] = r2;
+					linhas++;
+				}
+			}
+		}
+		System.out.println("----- Palpites Definidos -----");
 	}
 }
