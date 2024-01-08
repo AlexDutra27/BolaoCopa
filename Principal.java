@@ -34,6 +34,9 @@ public class Principal{
 
 	//	Lista de jogadores do bolão
 	public static ArrayList<Jogador> jogadores = new ArrayList<>();
+
+	//	Resultados dos jogos
+	public static int[][] resultados = new int[48][2];
 	
 	//	Executar todos os métodos do Bolão
 	public static void iniciarBolao(){
@@ -52,6 +55,12 @@ public class Principal{
 
 		//	Recebe os palpites
 		definirPalpites();
+
+		//	Recebe os resultados
+		definirResultados();
+
+		//	Exibir todos os resultados finais
+		infoResultados();
 	}
 	
 	//	Iterar sobre os nomes dos times e criar os objetos correspondentes
@@ -103,7 +112,7 @@ public class Principal{
 		int numeroJogador = 1;
 		char res;
 		do{
-			System.out.printf("Jogador %d: ", numeroJogador);               
+			System.out.printf("Jogador %d: ", numeroJogador);
 			jogadores.add(new Jogador(scan.nextLine(), numeroJogador));
 
 			System.out.println("Para encerrar a adição, digite \"x\". Senão. digite qualquer tecla");
@@ -129,10 +138,10 @@ public class Principal{
 				for (Jogo jogo : grupo.jogos) {
 					jogo.infoJogo();
 
-					System.out.printf("%nPalpite | Gols time 1: ");                  
+					System.out.printf("%nPalpite | Gols time 1: ");
 					int r1 = scan.nextInt();
 
-					System.out.printf("Palpite | Gols time 2: ");                                   
+					System.out.printf("Palpite | Gols time 2: ");
 					int r2 = scan.nextInt();
 
 					System.out.println(); 
@@ -144,5 +153,40 @@ public class Principal{
 			}
 		}
 		System.out.println("----- Palpites Definidos -----");
+	}
+
+	//	Receber entrada dos resultados finais de cada jogo e armazenar na matriz correspondente
+	public static void definirResultados(){
+		System.out.println("----- Defina os Resultados -----");
+
+		int linhas = 0;
+		for(Grupo grupo : grupos){
+			grupo.infoGrupo();
+
+			for (Jogo jogo : grupo.jogos) {
+				jogo.infoJogo();
+
+				System.out.printf("%nResultado | Gols time 1: ");
+				int r1 = scan.nextInt();
+
+				System.out.printf("Resultado | Gols time 2: ");
+				int r2 = scan.nextInt();
+
+				System.out.println();
+
+				resultados[linhas][0] = r1;
+				resultados[linhas][1] = r2;
+				linhas++;
+			}
+		}
+	}
+
+	//	Exibe todos os resultados inputados
+	public static void infoResultados(){
+		for(int linha = 0; linha < 48; linha++){
+			System.out.println();
+			jogos.get(linha).infoJogo();
+			System.out.printf("%d x %d", resultados[linha][0], resultados[linha][1]);
+		}
 	}
 }
