@@ -14,4 +14,9 @@ public class Grupo {
     public void setJogos(ArrayList<Jogo> jogos){
         this.jogos = jogos;
     }
+
+    //  Retorna o time no índice passado por parâmetro na lista
+    public Time getTime(int i){
+        return this.times.get(i);
+    }
 }

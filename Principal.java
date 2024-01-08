@@ -26,8 +26,11 @@ public class Principal{
 		"A", "B", "C", "D", "E", "F", "G", "H"
 	));
 
-	//	Lista com os jogos
+	//	Lista com os grupos
 	public static ArrayList<Grupo> grupos = new ArrayList<>();
+
+	//	Lista com os jogos
+	public static ArrayList<Jogo> jogos = new ArrayList<>();
 	
 	//	Executar todos os métodos do Bolão
 	public static void iniciarBolao(){
@@ -47,7 +50,7 @@ public class Principal{
 		}
 	}
 
-	//	Instancia grupos e cria os jogos
+	//	Instancia os grupos
 	public static void setarGruposJogos(){
 
 		//	Monta os grupos em uma lista contendo listas de 4 times cada
@@ -60,6 +63,24 @@ public class Principal{
 		int i = 0;
 		for(String letra : letrasGrupos){
 			grupos.add(new Grupo(timesEmGrupos.get(i++), letra));
+		}
+	}
+
+	//	Popular o array de jogos usando uma lista de grupos, fazendo cada time do grupo jogar com os demais
+	public static void criarJogos() {
+		int numeroJogo = 1;
+		for(Grupo grupo : grupos){
+			ArrayList<Jogo> jogosGrupo = new ArrayList<>();
+			jogosGrupo.add(new Jogo(grupo.getTime(0), grupo.getTime(1), numeroJogo++));
+			jogosGrupo.add(new Jogo(grupo.getTime(0), grupo.getTime(2), numeroJogo++));
+			jogosGrupo.add(new Jogo(grupo.getTime(0), grupo.getTime(3), numeroJogo++));
+			jogosGrupo.add(new Jogo(grupo.getTime(1), grupo.getTime(2), numeroJogo++));
+			jogosGrupo.add(new Jogo(grupo.getTime(1), grupo.getTime(3), numeroJogo++));
+			jogosGrupo.add(new Jogo(grupo.getTime(2), grupo.getTime(3), numeroJogo++));
+
+			grupo.setJogos(jogosGrupo);
+
+			jogos.addAll(jogosGrupo);
 		}
 	}
 }
